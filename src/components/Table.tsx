@@ -94,12 +94,12 @@ function stableSort<T>(
   return stabilizedThis.map((el) => el[0]);
 }
 
-interface HeadCell {
-  disablePadding: boolean;
-  id: keyof Data;
-  label: string;
-  numeric: boolean;
-}
+// interface HeadCell {
+//   disablePadding: boolean;
+//   id: keyof Data;
+//   label: string;
+//   numeric: boolean;
+// }
 
 const headCells = [
   {
@@ -225,7 +225,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           id="tableTitle"
           component="div"
         >
-          Reporte FECHA INICIO, hh:mm:ss a FECHA FINAL, hh:mm:ss
+          Reporte
         </Typography>
       )}
       {numSelected > 0 ? (
