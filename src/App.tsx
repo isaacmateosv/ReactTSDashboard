@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Table from "./components/Table";
 import PieChart from "./components/PieChart";
 import Fechas from "./components/Fechas";
+import SimpleForm from "./components/SimpleForm";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Table />
       <PieChart />
       <ListGroup />
+      <SimpleForm />
     </div>
   );
 }
