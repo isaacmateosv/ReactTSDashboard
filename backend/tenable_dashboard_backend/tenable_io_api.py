@@ -1,7 +1,9 @@
-from flask import Flask, request, Response
-import json
+from flask import Flask, request, jsonify
+import requests
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for the entire app
 
 
 @app.route('/get_plugin_info', methods=['GET'])
@@ -10,26 +12,24 @@ def get_plugin_info():
     yyy = request.args.get('yyy')
     zzz = request.args.get('zzz')
 
-    # Perform your desired logic here, e.g., fetching plugin info based on XYZ, YYY, and ZZZ.
-    # Replace this dummy data with your actual logic to get the desired JSON data.
-    plugin_info = {
-        "xyz": xyz,
-        "yyy": yyy,
-        "zzz": zzz,
-        "data": {
-            "key1": "value1",
-            "key2": "value2"
+    if not xyz or not yyy or not zzz:
+        return jsonify({'error': 'Missing parameters'}), 400
+
+    try:
+        headers = {
+            'X-ApiKeys': f'accessKey={yyy};secretKey={zzz}',
+            'accept': 'application/json'
         }
-    }
+        url = f'https://cloud.tenable.com/was/v2/plugins/{xyz}'
 
-    # Convert the plugin_info dictionary to JSON format
-    json_data = json.dumps(plugin_info)
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()  # Raise exception for non-2xx responses
 
-    # Set the Content-Disposition header to force download as "PluginInfo.json"
-    response = Response(json_data, content_type='application/json')
-    response.headers['Content-Disposition'] = 'attachment; filename=PluginInfo.json'
+        response_json = response.json()
 
-    return response
+        return jsonify(response_json)
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

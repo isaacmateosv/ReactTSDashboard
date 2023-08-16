@@ -11,15 +11,23 @@ const App: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:5000/get_plugin_info?xyz=${xyz}&yyy=${yyy}&zzz=${zzz}`
+        `/get_plugin_info?xyz=${xyz}&yyy=${yyy}&zzz=${zzz}`
       );
-      const jsonData = JSON.stringify(response.data);
+
+      // Create a Blob with the JSON data
+      const jsonData = JSON.stringify(response.data, null, 2);
       const blob = new Blob([jsonData], { type: "application/json" });
+
+      // Create a URL for the Blob
       const url = URL.createObjectURL(blob);
+
+      // Create a temporary anchor element and trigger the download
       const a = document.createElement("a");
       a.href = url;
       a.download = "PluginInfo.json";
       a.click();
+
+      // Revoke the URL to free up memory
       URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -28,7 +36,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <h1>Plugin Info Exporter</h1>
+      <h1>Prueba para obtener JSON</h1>
       <TextField
         label="XYZ"
         value={xyz}
