@@ -1,4 +1,4 @@
-import ListGroup from "./components/ListGroup";
+// import ListGroup from "./components/ListGroup";
 import Navbar from "./components/Navbar";
 import Table from "./components/Table";
 import PieChart from "./components/PieChart";
@@ -10,10 +10,10 @@ function App() {
     <div>
       <Navbar />
       <Fechas />
+      <SimpleForm />
       <Table />
       <PieChart />
-      <ListGroup />
-      <SimpleForm />
+      {/* <ListGroup /> */}
     </div>
   );
 }

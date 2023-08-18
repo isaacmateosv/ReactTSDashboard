@@ -35,27 +35,39 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Prueba para obtener JSON</h1>
-      <TextField
-        label="XYZ"
-        value={xyz}
-        onChange={(e) => setXYZ(e.target.value)}
-      />
-      <TextField
-        label="YYY"
-        value={yyy}
-        onChange={(e) => setYYY(e.target.value)}
-      />
-      <TextField
-        label="ZZZ"
-        value={zzz}
-        onChange={(e) => setZZZ(e.target.value)}
-      />
-      <Button variant="contained" onClick={handleSubmit}>
-        Export to JSON
-      </Button>
-    </div>
+    <>
+      <div class="container text-center">
+        <h4>Reporte en .JSON</h4>
+        <div class="row justify-content-evenly">
+          <div class="col-3">
+            <TextField
+              label="PluginID"
+              value={xyz}
+              onChange={(e) => setXYZ(e.target.value)}
+            />
+          </div>
+          <div class="col-3">
+            <TextField
+              label="ACCESS Key"
+              value={yyy}
+              onChange={(e) => setYYY(e.target.value)}
+            />
+          </div>
+          <div class="col-3">
+            <TextField
+              label="SECRET Key"
+              value={zzz}
+              onChange={(e) => setZZZ(e.target.value)}
+            />
+          </div>
+          <div class="col-3 my-auto">
+            <Button variant="contained" onClick={handleSubmit}>
+              Get .JSON file
+            </Button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
