@@ -184,6 +184,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           </TableCell>
         ))}
       </TableRow>
+      &nbsp;
     </TableHead>
   );
 }
@@ -403,6 +404,7 @@ export default function EnhancedTable() {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
+      &nbsp;
     </Box>
   );
 }

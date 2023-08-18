@@ -1,7 +1,7 @@
 {
   "name": "tenable-dashboard",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "http://elProxyNoValeeeeePonerLasUrlsUnaPorUnaEnCadaPuntoFin",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

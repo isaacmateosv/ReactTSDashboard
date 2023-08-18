@@ -11,7 +11,8 @@ const App: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const response = await axios.get(
-        `/get_plugin_info?xyz=${xyz}&yyy=${yyy}&zzz=${zzz}`
+        // no funciona colocarle el proxy
+        `http://localhost:5000/get_plugin_info?xyz=${xyz}&yyy=${yyy}&zzz=${zzz}`
       );
 
       // Create a Blob with the JSON data
@@ -24,7 +25,7 @@ const App: React.FC = () => {
       // Create a temporary anchor element and trigger the download
       const a = document.createElement("a");
       a.href = url;
-      a.download = "PluginInfo.json";
+      a.download = "Report_Plugin#" + xyz + ".json";
       a.click();
 
       // Revoke the URL to free up memory
@@ -34,12 +35,18 @@ const App: React.FC = () => {
     }
   };
 
+  const handleClear = () => {
+    setXYZ("");
+    setYYY("");
+    setZZZ("");
+  };
+
   return (
     <>
       <div class="container text-center">
         <h4>Reporte en .JSON</h4>
         <div class="row justify-content-evenly">
-          <div class="col-3">
+          <div class="col-2">
             <TextField
               label="PluginID"
               value={xyz}
@@ -60,13 +67,23 @@ const App: React.FC = () => {
               onChange={(e) => setZZZ(e.target.value)}
             />
           </div>
-          <div class="col-3 my-auto">
+          <div class="col-2 my-auto">
             <Button variant="contained" onClick={handleSubmit}>
-              Get .JSON file
+              Exportar
+            </Button>
+          </div>
+          <div class="col-2 my-auto">
+            <Button
+              variant="contained"
+              onClick={handleClear}
+              style={{ backgroundColor: "red", color: "white" }}
+            >
+              Limpiar
             </Button>
           </div>
         </div>
       </div>
+      &nbsp;
     </>
   );
 };

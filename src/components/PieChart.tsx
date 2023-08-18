@@ -31,7 +31,11 @@ const SamplePlot: React.FC = () => {
     },
   };
 
-  return <Plot data={data} layout={layout} />;
+  return (
+    <div class="container text-center">
+      <Plot data={data} layout={layout} />;
+    </div>
+  );
 };
 
 export default SamplePlot;
