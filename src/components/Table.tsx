@@ -230,13 +230,13 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         </Typography>
       )}
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title="Eliminar">
           <IconButton>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
+        <Tooltip title="Filtrar">
           <IconButton>
             <FilterListIcon />
           </IconButton>
@@ -246,6 +246,8 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   );
 }
 
+//EDITAR AQUÍ SI SE DESEA ORDENAR POR CLAVE
+// ordenar por clave
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("calories");
