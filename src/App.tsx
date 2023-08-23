@@ -1,16 +1,16 @@
-// import React from "react";
+// import ListGroup from "./components/ListGroup";
 import Navbar from "./components/Navbar";
+import Table from "./components/Table";
+import PieChart from "./components/PieChart";
 import Fechas from "./components/Fechas";
 import SimpleForm from "./components/SimpleForm";
 import UploadJSONFile from "./components/UploadJSONFile";
-import Table from "./components/Table";
-import PieChart from "./components/PieChart";
 
 function App() {
-  const handleFileUpload = (file: File) => {
-    // Process the uploaded file as needed
-    console.log("Uploaded file:", file.name);
-    // You can also store it in the state if necessary
+  const handleJsonParsed = (parsedJson) => {
+    // Handle the parsed JSON data here
+    console.log("Parsed JSON data:", parsedJson);
+    // You can use this data to update your state or perform other actions
   };
 
   return (
@@ -18,9 +18,10 @@ function App() {
       <Navbar />
       <Fechas />
       <SimpleForm />
-      <UploadJSONFile onFileUpload={handleFileUpload} />
+      <UploadJSONFile onJsonParsed={handleJsonParsed} />
       <Table />
       <PieChart />
+      {/* <ListGroup /> */}
     </div>
   );
 }
