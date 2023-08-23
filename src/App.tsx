@@ -1,21 +1,26 @@
-// import ListGroup from "./components/ListGroup";
+// import React from "react";
 import Navbar from "./components/Navbar";
-import Table from "./components/Table";
-import PieChart from "./components/PieChart";
 import Fechas from "./components/Fechas";
 import SimpleForm from "./components/SimpleForm";
-import JsonUploader from "./components/JsonUploader";
+import UploadJSONFile from "./components/UploadJSONFile";
+import Table from "./components/Table";
+import PieChart from "./components/PieChart";
 
 function App() {
+  const handleFileUpload = (file: File) => {
+    // Process the uploaded file as needed
+    console.log("Uploaded file:", file.name);
+    // You can also store it in the state if necessary
+  };
+
   return (
     <div>
       <Navbar />
       <Fechas />
       <SimpleForm />
-      <JsonUploader />
+      <UploadJSONFile onFileUpload={handleFileUpload} />
       <Table />
       <PieChart />
-      {/* <ListGroup /> */}
     </div>
   );
 }
