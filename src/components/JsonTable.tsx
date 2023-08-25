@@ -7,6 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import ParsedJson from "./UploadJSONFile";
+import jsonMongoCollection from "./Navbar"; // Import the jsonMongoCollection variable
 
 interface JsonTableProps {
   parsedJson: ParsedJson;
@@ -20,6 +21,7 @@ const cellStyle: React.CSSProperties = {
 
 const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
   const { keys, data } = parsedJson;
+  console.log(jsonMongoCollection); // Use the fetched JSON data here
 
   return (
     <TableContainer
@@ -37,13 +39,15 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            {keys.map((key) => (
-              <TableCell key={key} style={cellStyle}>
-                {getValue(data[key])}
-              </TableCell>
-            ))}
-          </TableRow>
+          {jsonMongoCollection.map((item, index) => (
+            <TableRow key={index}>
+              {keys.map((key) => (
+                <TableCell key={key} style={cellStyle}>
+                  {getValue(item[key])}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

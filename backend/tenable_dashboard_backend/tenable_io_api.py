@@ -1,9 +1,18 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 import requests
 from flask_cors import CORS
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+from bson import json_util
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for the entire app
+
+# MongoDB Atlas connection setup
+uri = "mongodb+srv://isaac_sarzosa:ynEOum1xSVLlUcgO@gr.b81h7hu.mongodb.net/?retryWrites=true&w=majority"
+client = MongoClient(uri, server_api=ServerApi('1'))
+db = client['Tenable_io']
+collection = db['WASTool']
 
 
 @app.route('/get_plugin_info', methods=['GET'])
@@ -29,6 +38,19 @@ def get_plugin_info():
 
         return jsonify(response_json)
     except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/download-collection', methods=['GET'])
+def download_collection():
+    try:
+        # Download MongoDB collection and serve as JSON
+        mongo_data = list(collection.find())
+        serialized_data = json_util.dumps(
+            mongo_data)  # Serialize using json_util
+        response = Response(serialized_data, content_type='application/json')
+        return response
+    except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 
