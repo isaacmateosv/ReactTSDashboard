@@ -51,16 +51,21 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
 };
 
 const getValue = (value: any): React.ReactNode => {
-  if (typeof value === "object" && value !== null) {
-    if (Array.isArray(value)) {
-      if (value.length === 0) {
-        return "Info no disponible ni provista desde la herramienta.";
-      }
-      return value.join(", ");
+  if (Array.isArray(value)) {
+    if (value.length === 0) {
+      return "Info no disponible ni provista desde la herramienta.";
+    }
+    return value.join(", ");
+  } else if (typeof value === "object" && value !== null) {
+    if (value.subpropertyA1) {
+      // Handle nested properties with subproperty structure
+      return (
+        <div className="nested-table">
+          <JsonTable parsedJson={{ keys: Object.keys(value), data: [value] }} />
+        </div>
+      );
     } else {
-      if (Object.keys(value).length === 0) {
-        return "Info no disponible ni provista desde la herramienta.";
-      }
+      // Handle regular nested objects
       return (
         <div className="nested-table">
           <JsonTable parsedJson={{ keys: Object.keys(value), data: value }} />
