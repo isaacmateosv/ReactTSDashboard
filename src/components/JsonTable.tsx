@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
@@ -40,6 +40,7 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
           <TableRow>
             {keys.map((key) => (
               <TableCell key={key} style={cellStyle}>
+                <div>{key}</div>
                 {getValue(data[key])}
               </TableCell>
             ))}
@@ -62,14 +63,9 @@ const getValue = (value: any): React.ReactNode => {
         return "Info no disponible ni provista.";
       }
       return (
-        <>
-          <button type="button" className="expand-button">
-            Expand
-          </button>
-          <div className="nested-table" style={{ display: "none" }}>
-            <JsonTable parsedJson={{ keys: Object.keys(value), data: value }} />
-          </div>
-        </>
+        <div className="nested-table">
+          <JsonTable parsedJson={{ keys: Object.keys(value), data: value }} />
+        </div>
       );
     }
   } else if (value === null || value === undefined || value === "") {
