@@ -21,9 +21,7 @@ function App() {
       {/* <Fechas /> */}
       <SimpleForm />
       <UploadJSONFile onJsonParsed={handleJsonParsed} />
-      {jsonData && <JsonTable parsedJson={jsonData} />}{" "}
-      {/* Display the JSON table */}
-      <PieChart />
+      {jsonData && <JsonTable parsedJson={jsonData} />} <PieChart />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
@@ -12,6 +12,12 @@ interface JsonTableProps {
   parsedJson: ParsedJson;
 }
 
+const cellStyle: React.CSSProperties = {
+  borderRight: "1px solid #ccc",
+  padding: "8px 16px",
+  verticalAlign: "top",
+};
+
 const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
   const { keys, data } = parsedJson;
 
@@ -24,14 +30,16 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
         <TableHead>
           <TableRow>
             {keys.map((key) => (
-              <TableCell key={key}>{key}</TableCell>
+              <TableCell key={key} style={cellStyle}>
+                {key}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
             {keys.map((key) => (
-              <TableCell key={key} style={{ verticalAlign: "top" }}>
+              <TableCell key={key} style={cellStyle}>
                 {getValue(data[key])}
               </TableCell>
             ))}
@@ -42,7 +50,7 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
   );
 };
 
-const getValue = (value: any): string => {
+const getValue = (value: any): React.ReactNode => {
   if (typeof value === "object" && value !== null) {
     if (Array.isArray(value)) {
       if (value.length === 0) {
@@ -53,10 +61,19 @@ const getValue = (value: any): string => {
       if (Object.keys(value).length === 0) {
         return "Info no disponible ni provista.";
       }
-      return JSON.stringify(value, null, 2);
+      return (
+        <>
+          <button type="button" className="expand-button">
+            Expand
+          </button>
+          <div className="nested-table" style={{ display: "none" }}>
+            <JsonTable parsedJson={{ keys: Object.keys(value), data: value }} />
+          </div>
+        </>
+      );
     }
   } else if (value === null || value === undefined || value === "") {
-    return "Info no disponible ni provista.";
+    return "Info no disponible ni provista desde la herramienta.";
   } else {
     return String(value);
   }
