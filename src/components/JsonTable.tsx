@@ -54,12 +54,12 @@ const getValue = (value: any): React.ReactNode => {
   if (typeof value === "object" && value !== null) {
     if (Array.isArray(value)) {
       if (value.length === 0) {
-        return "Info no disponible ni provista.";
+        return "Info no disponible ni provista desde la herramienta.";
       }
       return value.join(", ");
     } else {
       if (Object.keys(value).length === 0) {
-        return "Info no disponible ni provista.";
+        return "Info no disponible ni provista desde la herramienta.";
       }
       return (
         <div className="nested-table">
@@ -69,6 +69,13 @@ const getValue = (value: any): React.ReactNode => {
     }
   } else if (value === null || value === undefined || value === "") {
     return "Info no disponible ni provista desde la herramienta.";
+  } else if (typeof value === "object") {
+    // Handle subproperties
+    return (
+      <div className="nested-table">
+        <JsonTable parsedJson={{ keys: Object.keys(value), data: value }} />
+      </div>
+    );
   } else {
     return String(value);
   }
