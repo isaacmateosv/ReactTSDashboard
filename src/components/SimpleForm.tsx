@@ -49,31 +49,31 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div class="container text-center">
+      <div className="container text-center">
         <h4>Lectura remota de .JSON desde Tenable</h4>
-        <div class="row justify-content-evenly">
-          <div class="col-2">
+        <div className="row justify-content-evenly">
+          <div className="col-2">
             <TextField
               label="PluginID"
               value={xyz}
               onChange={(e) => setXYZ(e.target.value)}
             />
           </div>
-          <div class="col-3">
+          <div className="col-3">
             <TextField
               label="ACCESS Key"
               value={yyy}
               onChange={(e) => setYYY(e.target.value)}
             />
           </div>
-          <div class="col-3">
+          <div className="col-3">
             <TextField
               label="SECRET Key"
               value={zzz}
               onChange={(e) => setZZZ(e.target.value)}
             />
           </div>
-          <div class="col-2 my-auto">
+          <div className="col-2 my-auto">
             <Button
               variant="contained"
               onClick={handleSubmit}
@@ -82,12 +82,12 @@ const App: React.FC = () => {
               Cargar datos
             </Button>
           </div>
-          <div class="col-2 my-auto">
+          <div className="col-2 my-auto">
             <Button variant="contained" onClick={handleDownload}>
               Descargar .json
             </Button>
           </div>
-          <div class="col-2 my-auto">
+          <div className="col-2 my-auto">
             <Button
               variant="contained"
               onClick={handleClear}

@@ -12,6 +12,7 @@ interface JsonUploadProps {
 
 const JsonUpload: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [jsonData, setJsonData] = useState<object | null>(null); // Add this state
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -27,6 +28,7 @@ const JsonUpload: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
       try {
         const jsonData = JSON.parse(event.target?.result as string);
         const keys = Object.keys(jsonData);
+        setJsonData(jsonData); // Set the jsonData in the state
         onJsonParsed({ keys, data: jsonData });
       } catch (error) {
         console.error("Error leyendo el .JSON:", error);
@@ -36,7 +38,7 @@ const JsonUpload: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
   };
 
   return (
-    <div class="container text-center">
+    <div className="container text-center">
       <h4>Lectura de .JSON local</h4>
       <input
         type="file"
@@ -52,6 +54,8 @@ const JsonUpload: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
         Carga local
       </Button>
       {selectedFile && <p>Archivo: {selectedFile.name}</p>}
+      {/* Export the jsonData here */}
+      {/* {jsonData && <p>JSON Data: {JSON.stringify(jsonData)}</p>} */}
       &nbsp;
     </div>
   );

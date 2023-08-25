@@ -1,27 +1,29 @@
-// import ListGroup from "./components/ListGroup";
+import { useState } from "react";
 import Navbar from "./components/Navbar";
-import Table from "./components/Table";
-import PieChart from "./components/PieChart";
 import Fechas from "./components/Fechas";
 import SimpleForm from "./components/SimpleForm";
 import UploadJSONFile from "./components/UploadJSONFile";
+import JsonTable from "./components/JsonTable"; // Import the new component
+import PieChart from "./components/PieChart";
 
 function App() {
-  const handleJsonParsed = (parsedJson) => {
-    // Handle the parsed JSON data here
+  const [jsonData, setJsonData] = useState<ParsedJson | null>(null);
+
+  const handleJsonParsed = (parsedJson: ParsedJson) => {
+    // Handle the parsed JSON data by updating the state
     console.log("Parsed JSON data:", parsedJson);
-    // You can use this data to update your state or perform other actions
+    setJsonData(parsedJson);
   };
 
   return (
     <div>
       <Navbar />
-      <Fechas />
+      {/* <Fechas /> */}
       <SimpleForm />
       <UploadJSONFile onJsonParsed={handleJsonParsed} />
-      <Table />
+      {jsonData && <JsonTable parsedJson={jsonData} />}{" "}
+      {/* Display the JSON table */}
       <PieChart />
-      {/* <ListGroup /> */}
     </div>
   );
 }

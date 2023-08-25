@@ -32,7 +32,7 @@ const SamplePlot: React.FC = () => {
   };
 
   return (
-    <div class="container text-center">
+    <div className="container text-center">
       <Plot data={data} layout={layout} />;
     </div>
   );
