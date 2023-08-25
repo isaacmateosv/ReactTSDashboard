@@ -40,7 +40,6 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
           <TableRow>
             {keys.map((key) => (
               <TableCell key={key} style={cellStyle}>
-                <div>{key}</div>
                 {getValue(data[key])}
               </TableCell>
             ))}
