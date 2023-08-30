@@ -50,7 +50,7 @@ const App: React.FC = () => {
   return (
     <>
       <div className="container text-center">
-        <h4>Lectura remota de .JSON desde Tenable</h4>
+        <h4>Añadir Plugin con .JSON desde Tenable API</h4>
         <div className="row justify-content-evenly">
           <div className="col-2">
             <TextField
@@ -79,12 +79,12 @@ const App: React.FC = () => {
               onClick={handleSubmit}
               style={{ backgroundColor: "green", color: "white" }}
             >
-              Cargar datos
+              Cargar Plugin
             </Button>
           </div>
           <div className="col-2 my-auto">
             <Button variant="contained" onClick={handleDownload}>
-              Descargar .json
+              Descargar Plugin
             </Button>
           </div>
           <div className="col-2 my-auto">

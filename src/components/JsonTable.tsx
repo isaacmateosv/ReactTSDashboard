@@ -1,93 +1,76 @@
 import React from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import TableBody from "@mui/material/TableBody";
-import ParsedJson from "./UploadJSONFile";
-import jsonMongoCollection from "./Navbar"; // Import the jsonMongoCollection variable
 
 interface JsonTableProps {
-  parsedJson: ParsedJson;
+  parsedJson: {
+    [key: string]: any;
+  };
 }
 
-const cellStyle: React.CSSProperties = {
-  borderRight: "1px solid #ccc",
-  padding: "8px 16px",
-  verticalAlign: "top",
+const renderCellValue = (value: any): React.ReactNode => {
+  if (Array.isArray(value) && value.length === 0) {
+    return (
+      <span style={{ fontStyle: "italic", color: "#999", textAlign: "center" }}>
+        Array vacío.
+      </span>
+    );
+  } else if (
+    typeof value === "object" &&
+    value !== null &&
+    Object.keys(value).length === 0
+  ) {
+    return (
+      <span style={{ fontStyle: "italic", color: "#999", textAlign: "center" }}>
+        Subcolección vacía.
+      </span>
+    );
+  } else if (Array.isArray(value)) {
+    return value.join(", ");
+  } else if (typeof value === "object" && value !== null) {
+    return <JsonTable parsedJson={value} />;
+  } else if (value === true) {
+    return <span style={{ fontFamily: "monospace", color: "red" }}>TRUE</span>;
+  } else if (value === false) {
+    return <span style={{ fontFamily: "monospace", color: "red" }}>FALSE</span>;
+  } else if (value === null || value === undefined || value === "") {
+    return (
+      <span style={{ fontStyle: "italic", color: "#999", textAlign: "center" }}>
+        Info no disponible ni provista desde la herramienta.
+      </span>
+    );
+  } else {
+    return value;
+  }
 };
 
 const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
-  const { keys, data } = parsedJson;
-  console.log(jsonMongoCollection); // Use the fetched JSON data here
+  const keys = Object.keys(parsedJson);
 
   return (
-    <TableContainer
-      component={Paper}
-      style={{ maxWidth: "100%", overflowX: "auto" }}
-    >
-      <Table>
-        <TableHead>
-          <TableRow>
-            {keys.map((key) => (
-              <TableCell key={key} style={cellStyle}>
+    <div>
+      <table style={{ borderCollapse: "collapse", width: "100%" }}>
+        <tbody>
+          {keys.map((key, index) => (
+            <tr key={index}>
+              <td
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  fontWeight: "bold",
+                  backgroundColor: "#f2f2f2",
+                }}
+              >
                 {key}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {jsonMongoCollection.map((item, index) => (
-            <TableRow key={index}>
-              {keys.map((key) => (
-                <TableCell key={key} style={cellStyle}>
-                  {getValue(item[key])}
-                </TableCell>
-              ))}
-            </TableRow>
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                {renderCellValue(parsedJson[key])}
+              </td>
+            </tr>
           ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </tbody>
+      </table>
+      &nbsp;
+    </div>
   );
-};
-
-const getValue = (value: any): React.ReactNode => {
-  if (Array.isArray(value)) {
-    if (value.length === 0) {
-      return "Info no disponible ni provista desde la herramienta.";
-    }
-    return value.join(", ");
-  } else if (typeof value === "object" && value !== null) {
-    if (value.subpropertyA1) {
-      // Handle nested properties with subproperty structure
-      return (
-        <div className="nested-table">
-          <JsonTable parsedJson={{ keys: Object.keys(value), data: [value] }} />
-        </div>
-      );
-    } else {
-      // Handle regular nested objects
-      return (
-        <div className="nested-table">
-          <JsonTable parsedJson={{ keys: Object.keys(value), data: value }} />
-        </div>
-      );
-    }
-  } else if (value === null || value === undefined || value === "") {
-    return "Info no disponible ni provista desde la herramienta.";
-  } else if (typeof value === "object") {
-    // Handle subproperties
-    return (
-      <div className="nested-table">
-        <JsonTable parsedJson={{ keys: Object.keys(value), data: value }} />
-      </div>
-    );
-  } else {
-    return String(value);
-  }
 };
 
 export default JsonTable;

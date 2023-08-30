@@ -1,18 +1,17 @@
-import { useState } from "react";
+import React from "react";
 import Navbar from "./components/Navbar";
-import Fechas from "./components/Fechas";
 import SimpleForm from "./components/SimpleForm";
 import UploadJSONFile from "./components/UploadJSONFile";
 import JsonTable from "./components/JsonTable"; // Import the new component
 import PieChart from "./components/PieChart";
 
 function App() {
-  const [jsonData, setJsonData] = useState<ParsedJson | null>(null);
+  const [parsedJson, setParsedJson] = React.useState(null);
 
-  const handleJsonParsed = (parsedJson: ParsedJson) => {
+  const handleJsonParsed = (parsedJsonData) => {
     // Handle the parsed JSON data by updating the state
     console.log("Parsed JSON data:", parsedJson);
-    setJsonData(parsedJson);
+    setParsedJson(parsedJsonData);
   };
 
   return (
@@ -21,7 +20,7 @@ function App() {
       {/* <Fechas /> */}
       <SimpleForm />
       <UploadJSONFile onJsonParsed={handleJsonParsed} />
-      {jsonData && <JsonTable parsedJson={jsonData} />} <PieChart />
+      {parsedJson && <JsonTable parsedJson={parsedJson} />} <PieChart />
     </div>
   );
 }
