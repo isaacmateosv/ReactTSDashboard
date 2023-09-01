@@ -16,7 +16,7 @@ function Navbar() {
       console.log(data);
       setJsonMongoCollection(data); // Updated state variable name
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error al traer la data:", error);
     }
     setIsLoading(false);
   };
@@ -33,7 +33,7 @@ function Navbar() {
               onClick={fetchData}
               disabled={isLoading}
             >
-              {isLoading ? "Loading..." : "Cargar Registro"}
+              {isLoading ? "Cargando..." : "Cargar Registro"}
             </button>
           </form>
         </div>

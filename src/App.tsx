@@ -10,7 +10,7 @@ function App() {
 
   const handleJsonParsed = (parsedJsonData) => {
     // Handle the parsed JSON data by updating the state
-    console.log("Parsed JSON data:", parsedJson);
+    console.log("Parsed JSON: ", parsedJson);
     setParsedJson(parsedJsonData);
   };
 
@@ -19,8 +19,8 @@ function App() {
       <Navbar />
       {/* <Fechas /> */}
       <SimpleForm />
-      <UploadJSONFile onJsonParsed={handleJsonParsed} />
-      {parsedJson && <JsonTable parsedJson={parsedJson} />} <PieChart />
+      {parsedJson && <JsonTable parsedJson={parsedJson} />}
+      <UploadJSONFile onJsonParsed={handleJsonParsed} /> <PieChart />
     </div>
   );
 }

@@ -19,7 +19,7 @@ const App: React.FC = () => {
       // Store parsed JSON data in state
       setJsonData(JSON.stringify(response.data, null, 2));
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error al traer la data:", error);
     }
   };
 
@@ -33,7 +33,7 @@ const App: React.FC = () => {
     // Create a temporary anchor element and trigger the download
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Report_Plugin#" + xyz + ".json";
+    a.download = "Reporte_Plugin#" + xyz + ".json";
     a.click();
 
     // Revoke the URL to free up memory
@@ -99,7 +99,9 @@ const App: React.FC = () => {
         </div>
       </div>
       &nbsp;
-      {jsonData && <pre>{jsonData}</pre>} {/* Display parsed JSON data */}
+      {/* {jsonData} */}
+      {<pre>{jsonData}</pre>}
+      {/* COMENTARIO IMPORTANTE :v imprimir el .json*/}
     </>
   );
 };
