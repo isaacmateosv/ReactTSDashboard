@@ -32,7 +32,7 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
           Empty sub-collection.
         </span>
       );
-    } else if (key === "owasp" && Array.isArray(value)) {
+    } else if (key === "owasp" || (key === "owasp" && Array.isArray(value))) {
       return (
         <ol>
           {value.map((item: any, index: number) => (
@@ -51,7 +51,7 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
       // Check if the property is "see_also1" or "see_also2"
       if (
         value === parsedJson["see_also"] ||
-        value === parsedJson["other_parameter"]
+        value === parsedJson["Referencias"]
       ) {
         return (
           <ol style={{ listStyleType: "decimal" }}>

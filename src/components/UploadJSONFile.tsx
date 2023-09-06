@@ -38,25 +38,28 @@ const JsonUpload: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
   };
 
   return (
-    <div className="container text-center">
-      <h4>Lectura de Plugins con .JSON local</h4>
-      <input
-        type="file"
-        accept=".json"
-        onChange={handleFileChange}
-        style={{ display: "none" }}
-      />
-      <Button
-        variant="contained"
-        onClick={() => document.querySelector("input[type='file']")?.click()}
-        style={{ backgroundColor: "green", color: "white" }}
-      >
-        Carga local
-      </Button>
-      {selectedFile && <p>Archivo: {selectedFile.name}</p>}
-      {/* Aquí me mostraría el texto al que se le hizo Parsing. */}
-      {/* {jsonObject && <p>JSON Data: {JSON.stringify(jsonObject)}</p>} */}
-    </div>
+    <>
+      <div className="container text-center">
+        <h4>Lectura de Plugins con .JSON local</h4>
+        <input
+          type="file"
+          accept=".json"
+          onChange={handleFileChange}
+          style={{ display: "none" }}
+        />
+        <Button
+          variant="contained"
+          onClick={() => document.querySelector("input[type='file']")?.click()}
+          style={{ backgroundColor: "green", color: "white" }}
+        >
+          Carga local
+        </Button>
+        {selectedFile && <p>Archivo: {selectedFile.name}</p>}
+        {/* Aquí me mostraría el texto al que se le hizo Parsing. */}
+        {/* {jsonObject && <p>JSON Data: {JSON.stringify(jsonObject)}</p>} */}
+      </div>
+      &nbsp;
+    </>
   );
 };
 
