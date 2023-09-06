@@ -11,13 +11,13 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
 
   const [tableRendered, setTableRendered] = useState(false);
 
-  const renderCellValue = (value: any): React.ReactNode => {
+  const renderCellValue = (key: string, value: any): React.ReactNode => {
     if (Array.isArray(value) && value.length === 0) {
       return (
         <span
           style={{ fontStyle: "italic", color: "#999", textAlign: "center" }}
         >
-          Info no disponible ni provista desde la herramienta. Array vacío.
+          Info not available or provided by the tool. Empty array.
         </span>
       );
     } else if (
@@ -29,14 +29,29 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
         <span
           style={{ fontStyle: "italic", color: "#999", textAlign: "center" }}
         >
-          Subcolección vacía.
+          Empty sub-collection.
         </span>
+      );
+    } else if (key === "owasp" && Array.isArray(value)) {
+      return (
+        <ol>
+          {value.map((item: any, index: number) => (
+            <li key={index}>
+              <div>
+                <strong>Category:</strong> {item.category}
+              </div>
+              <div>
+                <strong>Year:</strong> {item.year}
+              </div>
+            </li>
+          ))}
+        </ol>
       );
     } else if (Array.isArray(value)) {
       // Check if the property is "see_also1" or "see_also2"
       if (
-        value === parsedJson["see_also1"] ||
-        value === parsedJson["see_also2"]
+        value === parsedJson["see_also"] ||
+        value === parsedJson["other_parameter"]
       ) {
         return (
           <ol style={{ listStyleType: "decimal" }}>
@@ -67,7 +82,7 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
         <span
           style={{ fontStyle: "italic", color: "#999", textAlign: "center" }}
         >
-          Info no disponible ni provista desde la herramienta.
+          Info not available or provided by the tool.
         </span>
       );
     } else {
@@ -81,14 +96,14 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
 
   const handleUploadNowClick = () => {
     // Handle the "Upload Now" button click
-    console.log("Seleccionaste Carga Local");
+    console.log("You selected Local Upload");
     // Replace with your actual functionality
   };
 
   return (
     <>
       {tableRendered && (
-        <button onClick={handleUploadNowClick}>Cargar Ahora</button>
+        <button onClick={handleUploadNowClick}>Upload Now</button>
       )}
 
       <div>
@@ -110,7 +125,7 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
                   {key}
                 </td>
                 <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                  {renderCellValue(parsedJson[key])}
+                  {renderCellValue(key, parsedJson[key])}
                 </td>
               </tr>
             ))}

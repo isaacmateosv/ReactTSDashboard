@@ -19,8 +19,9 @@ function App() {
       <Navbar />
       {/* <Fechas /> */}
       <SimpleForm />
+      <UploadJSONFile onJsonParsed={handleJsonParsed} />{" "}
       {parsedJson && <JsonTable parsedJson={parsedJson} />}
-      <UploadJSONFile onJsonParsed={handleJsonParsed} /> <PieChart />
+      <PieChart />
     </div>
   );
 }

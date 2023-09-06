@@ -33,6 +33,7 @@ const SamplePlot: React.FC = () => {
 
   return (
     <div className="container text-center">
+      <h4>Gráficos</h4>
       <Plot data={data} layout={layout} />;
     </div>
   );
