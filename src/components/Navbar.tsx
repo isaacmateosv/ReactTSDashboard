@@ -12,8 +12,7 @@ function Navbar({ onJsonParsed }) {
 
       // Trim the "_id" key and continue parsing from "ID_Vulnerabilidad"
       const trimmedData = jsonData.map((item) => {
-        const { _id, ...rest } = item;
-        return rest;
+        return item.slice(1);
       });
 
       setData(trimmedData); // Store the data in state
