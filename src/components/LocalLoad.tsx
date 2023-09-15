@@ -39,6 +39,7 @@ const JsonUpload: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
 
   return (
     <>
+      &nbsp;
       <div className="container text-center">
         <h4>Lectura de Plugins con .JSON local</h4>
         <input

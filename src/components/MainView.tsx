@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import Spinner from "react-bootstrap/Spinner";
+import { useState, useEffect } from "react";
 
-function Navbar({ onJsonParsed }) {
+function MainView({ onJsonParsed }) {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({}); // State to store the fetched data
 
@@ -49,22 +48,28 @@ function Navbar({ onJsonParsed }) {
 
   return (
     <>
-      <nav className="navbar bg-body-tertiary">
-        <div className="container-fluid">
-          {isLoading ? (
-            <div className="d-flex align-items-center">
-              <Spinner animation="border" role="status" size="sm">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-              <span className="ms-2">Cargando...</span>
-            </div>
-          ) : (
-            <a className="navbar-brand fs-2 fw-bold">Tenable Dashboard</a>
-          )}
-        </div>
-      </nav>
+      &nbsp;
+      <form className="d-flex justify-content-center" role="search">
+        <button
+          className="btn btn-outline-success"
+          type="button"
+          onClick={fetchData}
+          disabled={isLoading}
+        >
+          {isLoading ? "Cargando..." : "Cargar Registro"}
+        </button>
+        <button
+          className="btn btn-outline-primary ms-2"
+          type="button"
+          onClick={downloadDataAsJsonFile}
+          disabled={isLoading || !data}
+        >
+          Descargar Registro
+        </button>
+      </form>
+      &nbsp;
     </>
   );
 }
 
-export default Navbar;
+export default MainView;
