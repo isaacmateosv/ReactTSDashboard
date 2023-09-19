@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
 
 interface ParsedJson {
   keys: string[];
@@ -10,9 +9,9 @@ interface JsonUploadProps {
   onJsonParsed: (parsedJson: ParsedJson) => void;
 }
 
-const JsonUpload: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
+const LocalLoad: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [jsonObject, setJsonObject] = useState<object | null>(null); // Renamed state to jsonObject
+  // const [jsonObject, setJsonObject] = useState<object | null>(null); // Renamed state to jsonObject
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -22,13 +21,19 @@ const JsonUpload: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
     }
   };
 
+  const handleClick = () => {
+    const input = document.querySelector(
+      "input[type='file']"
+    ) as HTMLInputElement;
+    input.click();
+  };
+
   const parseJsonFile = (file: File) => {
     const reader = new FileReader();
     reader.onload = (event) => {
       try {
         const jsonData = JSON.parse(event.target?.result as string);
         const keys = Object.keys(jsonData);
-        setJsonObject(jsonData); // Set the jsonData in the state
         onJsonParsed({ keys, data: jsonData });
       } catch (error) {
         console.error("Error leyendo el .JSON:", error);
@@ -41,20 +46,25 @@ const JsonUpload: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
     <>
       &nbsp;
       <div className="container text-center">
-        <h4>Lectura de Plugins con .JSON local</h4>
-        <input
-          type="file"
-          accept=".json"
-          onChange={handleFileChange}
-          style={{ display: "none" }}
-        />
-        <Button
-          variant="contained"
-          onClick={() => document.querySelector("input[type='file']")?.click()}
-          style={{ backgroundColor: "green", color: "white" }}
-        >
-          Carga local
-        </Button>
+        <h5>Lectura de Plugins con .JSON local</h5>
+        &nbsp;
+        <div>
+          <input
+            type="file"
+            accept=".json"
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
+          <button
+            className="btn btn-outline-success"
+            type="button"
+            onClick={handleClick}
+            style={{ width: "25%" }}
+          >
+            Carga local
+          </button>
+        </div>
+        &nbsp;
         {selectedFile && <p>Archivo: {selectedFile.name}</p>}
         {/* Aquí me mostraría el texto al que se le hizo Parsing. */}
         {/* {jsonObject && <p>JSON Data: {JSON.stringify(jsonObject)}</p>} */}
@@ -64,4 +74,4 @@ const JsonUpload: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
   );
 };
 
-export default JsonUpload;
+export default LocalLoad;

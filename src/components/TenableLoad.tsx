@@ -1,57 +1,74 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import axios from "axios";
 
-const App: React.FC = () => {
+interface ParsedJson {
+  keys: string[];
+  data: object;
+}
+
+interface TenableLoadProps {
+  onJsonParsed: (parsedJson: ParsedJson) => void;
+}
+
+const TenableLoad: React.FC<TenableLoadProps> = ({ onJsonParsed }) => {
   const [xyz, setXYZ] = useState("");
   const [yyy, setYYY] = useState("");
   const [zzz, setZZZ] = useState("");
-  const [jsonData, setJsonData] = useState(""); // State to store parsed JSON data
+  const [jsonParsed, setJsonParsed] = useState<object | null>(null); // State to store parsed JSON data
 
-  const handleSubmit = async () => {
+  const fetchData = async () => {
     try {
       const response = await axios.get(
-        // no funciona colocarle el proxy
         `http://localhost:5000/get_plugin_info?xyz=${xyz}&yyy=${yyy}&zzz=${zzz}`
       );
 
+      const jsonData = response.data;
+
       // Store parsed JSON data in state
-      setJsonData(JSON.stringify(response.data, null, 2));
+      setJsonParsed(jsonData);
+
+      // Invoke the onJsonParsed callback to pass data to the parent component
+      onJsonParsed({ keys: Object.keys(jsonData), data: jsonData });
     } catch (error) {
       console.error("Error al traer la data.", error);
     }
   };
 
   const handleDownload = () => {
-    // Create a Blob with the JSON data
-    const blob = new Blob([jsonData], { type: "application/json" });
+    if (jsonParsed) {
+      // Create a Blob with the JSON data
+      const blob = new Blob([JSON.stringify(jsonParsed, null, 2)], {
+        type: "application/json",
+      });
 
-    // Create a URL for the Blob
-    const url = URL.createObjectURL(blob);
+      // Create a URL for the Blob
+      const url = URL.createObjectURL(blob);
 
-    // Create a temporary anchor element and trigger the download
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "Reporte_Plugin_" + xyz + ".json";
-    a.click();
+      // Create a temporary anchor element and trigger the download
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Reporte_Plugin_" + xyz + ".json";
+      a.click();
 
-    // Revoke the URL to free up memory
-    URL.revokeObjectURL(url);
+      // Revoke the URL to free up memory
+      URL.revokeObjectURL(url);
+    }
   };
 
   const handleClear = () => {
     setXYZ("");
     setYYY("");
     setZZZ("");
-    setJsonData(""); // Clear parsed JSON data
+    setJsonParsed(null); // Clear parsed JSON data
   };
 
   return (
     <>
       &nbsp;
       <div className="container text-center">
-        <h4>Añadir Plugin con .JSON desde Tenable API</h4>
+        <h5>Añadir Plugin con .JSON desde Tenable API</h5>
+        &nbsp;
         <div className="row">
           <div className="col-2">
             <TextField
@@ -80,35 +97,39 @@ const App: React.FC = () => {
         </div>
         <div className="row mt-2">
           <div className="col">
-            <Button
-              variant="contained"
-              onClick={handleSubmit}
+            <button
+              className="btn btn-outline-success"
+              type="button"
+              onClick={fetchData}
               style={{
-                backgroundColor: "green",
-                color: "white",
-                width: "100%",
+                width: "80%",
               }}
             >
               Cargar Plugin
-            </Button>
+            </button>
           </div>
           <div className="col">
-            <Button
-              variant="contained"
+            <button
+              className="btn btn-outline-primary ms-2"
+              type="button"
               onClick={handleDownload}
-              style={{ width: "100%" }}
+              style={{ width: "80%", borderColor: "blue" }}
             >
               Descargar Plugin
-            </Button>
+            </button>
           </div>
           <div className="col">
-            <Button
-              variant="contained"
+            <button
+              className="btn btn-outline-danger ms-2 clear-button"
+              type="button"
               onClick={handleClear}
-              style={{ backgroundColor: "red", color: "white", width: "100%" }}
+              style={{
+                borderColor: "red",
+                width: "80%",
+              }}
             >
               Limpiar campos
-            </Button>
+            </button>
           </div>
         </div>
       </div>
@@ -117,4 +138,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default TenableLoad;

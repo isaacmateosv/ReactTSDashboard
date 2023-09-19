@@ -23,6 +23,11 @@ const SourceSelector: React.FC<SourceSelectorProps> = ({ sources }) => {
             <Nav.Link
               eventKey={index}
               onClick={() => handleSourceChange(index)}
+              style={{
+                fontWeight: index === activeSource ? "bold" : "normal",
+                color: index === activeSource ? "black" : "gray",
+                fontSize: index === activeSource ? "20px" : "18px", // Adjust the font size here
+              }}
             >
               {source.label}
             </Nav.Link>
