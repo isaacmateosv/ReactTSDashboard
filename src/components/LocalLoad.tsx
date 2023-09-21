@@ -6,10 +6,10 @@ interface ParsedJson {
 }
 
 interface JsonUploadProps {
-  onJsonParsed: (parsedJson: ParsedJson) => void;
+  LocalJsonParsed: (parsedJson: ParsedJson) => void;
 }
 
-const LocalLoad: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
+const LocalLoad: React.FC<JsonUploadProps> = ({ LocalJsonParsed }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // const [jsonObject, setJsonObject] = useState<object | null>(null); // Renamed state to jsonObject
 
@@ -34,7 +34,7 @@ const LocalLoad: React.FC<JsonUploadProps> = ({ onJsonParsed }) => {
       try {
         const jsonData = JSON.parse(event.target?.result as string);
         const keys = Object.keys(jsonData);
-        onJsonParsed({ keys, data: jsonData });
+        LocalJsonParsed({ keys, data: jsonData });
       } catch (error) {
         console.error("Error leyendo el .JSON:", error);
       }

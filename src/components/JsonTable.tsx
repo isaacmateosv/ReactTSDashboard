@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 
 interface JsonTableProps {
   parsedJson: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
   };
 }
@@ -11,6 +13,7 @@ const JsonTable: React.FC<JsonTableProps> = ({ parsedJson }) => {
 
   const [tableRendered, setTableRendered] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderCellValue = (key: string, value: any): React.ReactNode => {
     if (Array.isArray(value) && value.length === 0) {
       return (

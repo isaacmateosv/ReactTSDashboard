@@ -8,14 +8,14 @@ interface ParsedJson {
 }
 
 interface TenableLoadProps {
-  onJsonParsed: (parsedJson: ParsedJson) => void;
+  TenableJsonParsed: (parsedJson: ParsedJson) => void;
 }
 
-const TenableLoad: React.FC<TenableLoadProps> = ({ onJsonParsed }) => {
+const TenableLoad: React.FC<TenableLoadProps> = ({ TenableJsonParsed }) => {
   const [xyz, setXYZ] = useState("");
   const [yyy, setYYY] = useState("");
   const [zzz, setZZZ] = useState("");
-  const [jsonParsed, setJsonParsed] = useState<object | null>(null); // State to store parsed JSON data
+  const [jsonParsed, setJsonParsed] = useState<ParsedJson | null>(null); // State to store parsed JSON data
 
   const fetchData = async () => {
     try {
@@ -28,8 +28,8 @@ const TenableLoad: React.FC<TenableLoadProps> = ({ onJsonParsed }) => {
       // Store parsed JSON data in state
       setJsonParsed(jsonData);
 
-      // Invoke the onJsonParsed callback to pass data to the parent component
-      onJsonParsed({ keys: Object.keys(jsonData), data: jsonData });
+      // Invoke the TenableJsonParsed callback to pass data to the parent component
+      TenableJsonParsed({ keys: Object.keys(jsonData), data: jsonData });
     } catch (error) {
       console.error("Error al traer la data.", error);
     }

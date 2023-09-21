@@ -7,11 +7,11 @@ interface ParsedJson {
 }
 
 interface BDLoadProps {
-  onJsonParsed: (parsedJsonData: ParsedJson) => void;
+  BDJsonParsed: (parsedJsonData: ParsedJson) => void;
 }
 
 //BD LOAD
-function BDLoad({ onJsonParsed }: BDLoadProps) {
+function BDLoad({ BDJsonParsed }: BDLoadProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({}); // State to store the fetched data
 
@@ -25,7 +25,7 @@ function BDLoad({ onJsonParsed }: BDLoadProps) {
       const trimmedData = jsonData[0];
 
       setData(trimmedData); // Store the data in state
-      onJsonParsed(trimmedData); // Call the prop function to pass the data to App
+      BDJsonParsed(trimmedData); // Call the prop function to pass the data to App
     } catch (error) {
       console.error("Error al traer la data.", error);
     }

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import Nav from "react-bootstrap/Nav";
 
+// SourceSelector.tsx
 interface SourceSelectorProps {
   sources: Array<{
     label: string;
     component: React.ReactNode;
   }>;
+  activeSource: string; // Define activeSource as a string
+  onSourceChange: (sourceLabel: string) => void;
 }
 
 const SourceSelector: React.FC<SourceSelectorProps> = ({ sources }) => {

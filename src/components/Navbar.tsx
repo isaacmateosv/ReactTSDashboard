@@ -1,13 +1,116 @@
-function Navbar() {
+import React, { useState, useEffect } from "react";
+import { Navbar, Nav, Container } from "react-bootstrap";
+
+const NavbarTransparent: React.FC = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const navbarStyle: React.CSSProperties = {
+    backgroundColor: scrolled ? "rgba(0, 0, 0, 0.3)" : "black",
+    backdropFilter: scrolled ? "blur(3.5px)" : "none",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 100,
+    transition: "background-color 0.3s ease-in-out",
+  };
+
+  const brandStyle: React.CSSProperties = {
+    fontSize: "1.5rem",
+    fontWeight: 700,
+    color: scrolled ? "black" : "white",
+  };
+
+  const navLinkStyle: React.CSSProperties = {
+    color: scrolled ? "black" : "white",
+    fontSize: "1rem",
+  };
+
+  const navLinkHoverStyle: React.CSSProperties = {
+    color: "#fff",
+  };
+
   return (
     <>
-      <nav className="navbar bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand fs-2 fw-bold">Tenable Dashboard</a>
-        </div>
-      </nav>
+      <style>
+        {`
+          .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            transition: background-color 0.3s ease-in-out;
+          }
+
+          .navbar.scrolled {
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+          }
+
+          .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: scrolled ? "black" : "white";
+          }
+
+          .nav-link {
+            color: scrolled ? "black" : "white";
+            font-size: 1rem;
+          }
+
+          .nav-link:hover {
+            color: ${navLinkHoverStyle.color}; // Apply hover color
+          }
+
+          .navbar-collapse {
+            justify-content: flex-end;
+          }
+
+          .about-button {
+            margin-left: auto;
+          }
+        `}
+      </style>
+      <Navbar
+        expand="lg"
+        className={`navbar navbar-expand-lg navbar-dark ${
+          scrolled ? "scrolled" : ""
+        }`}
+        style={navbarStyle}
+      >
+        <Container>
+          <Navbar.Brand href="/" style={brandStyle}>
+            Tenable Dashboard
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbar-collapse" />
+          <Navbar.Collapse id="navbar-collapse">
+            <Nav className="ml-auto">
+              <Nav.Link href="/about" style={navLinkStyle}>
+                About
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     </>
   );
-}
+};
 
-export default Navbar;
+export default NavbarTransparent;
