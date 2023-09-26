@@ -32,7 +32,7 @@ const NavbarTransparent: React.FC = () => {
   };
 
   const brandStyle: React.CSSProperties = {
-    fontSize: "1.5rem",
+    fontSize: "2rem",
     fontWeight: 700,
     color: scrolled ? "black" : "white",
   };

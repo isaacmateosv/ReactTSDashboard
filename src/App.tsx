@@ -62,6 +62,7 @@ function App() {
   const appStyle = {
     border: "5% solid #000", // 5% border with black color
     padding: "10px", // Optional: Add padding inside the border
+    paddingTop: "5rem", // Optional: Add padding inside the border
   };
 
   return (
