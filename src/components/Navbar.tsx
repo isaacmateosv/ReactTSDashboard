@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import CurrentSelection from "./CurrentSelection";
 
-const NavbarTransparent: React.FC = () => {
+interface NavbarProps {
+  selectedSource: string; // Receive selectedSource as a prop
+}
+
+const NavbarTransparent: React.FC<NavbarProps> = ({ selectedSource }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -22,13 +27,15 @@ const NavbarTransparent: React.FC = () => {
 
   const navbarStyle: React.CSSProperties = {
     backgroundColor: scrolled ? "rgba(0, 0, 0, 0.3)" : "black",
-    backdropFilter: scrolled ? "blur(3.5px)" : "none",
+    backdropFilter: scrolled ? "blur(2px)" : "none",
     position: "fixed",
     top: 0,
     left: 0,
     right: 0,
     zIndex: 100,
     transition: "background-color 0.3s ease-in-out",
+    display: "flex",
+    alignItems: "center", // Center vertically
   };
 
   const brandStyle: React.CSSProperties = {
@@ -46,6 +53,12 @@ const NavbarTransparent: React.FC = () => {
     color: "#fff",
   };
 
+  const offcanvasStyle: React.CSSProperties = {
+    fontSize: "1rem", // Increase font size
+    fontWeight: "500",
+    transform: "translateY(-80%)", // Adjust the vertical position
+  };
+
   return (
     <>
       <style>
@@ -61,7 +74,7 @@ const NavbarTransparent: React.FC = () => {
 
           .navbar.scrolled {
             background-color: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(50px);
           }
 
           .navbar-brand {
@@ -99,11 +112,16 @@ const NavbarTransparent: React.FC = () => {
           <Navbar.Brand href="/" style={brandStyle}>
             Tenable Dashboard
           </Navbar.Brand>
+          {scrolled && (
+            <Navbar.Offcanvas className="navbar-text" style={offcanvasStyle}>
+              <CurrentSelection source={selectedSource} />
+            </Navbar.Offcanvas>
+          )}
           <Navbar.Toggle aria-controls="navbar-collapse" />
           <Navbar.Collapse id="navbar-collapse">
             <Nav className="ml-auto">
-              <Nav.Link href="/about" style={navLinkStyle}>
-                About
+              <Nav.Link href="/" style={navLinkStyle}>
+                Recargar
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

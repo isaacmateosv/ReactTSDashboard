@@ -68,7 +68,8 @@ function App() {
   return (
     <div style={appStyle}>
       <div className="navbar-container">
-        <Navbar /> {/* Pass the handler as a prop */}
+        <Navbar selectedSource={selectedSource} />{" "}
+        {/* Pass selectedSource as a prop */}
       </div>
       {/* <Fechas /> */}
       <SourceSelector
